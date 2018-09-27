@@ -55,16 +55,12 @@ Dictionary of meanings:
 # int chdir(char *path): Return type int; Changes the current working directory to path
 # void exit(int status): Ends the program returning with the exit status 'status'
 
+SELF RESEARCH: (Useful functions)
+char *strchr(char *str, char c): Finds the first instance of a char c in the string and returns a pointer to that char otherwise returns NULL (we can use this to find either the : or the = in a line to tell if it is a variable definition or something else...)
+ - Returns the rest of the string after (and including) the char c (we can use this to find what we what the variable to be defined by)
 */
 
 #define DEFAULT 100;
-
-
-char* openfile(char* filename) {
-  File *fb;
-  fb = fopen(("%c.txt",filename), "r")
-  return fgetc(fb);
-}
 
 // Define allocates you memory and gives you a pointer for it, use: Variable's pointer = define(true); (given it is an int)
 int* define(isint) {
@@ -72,6 +68,38 @@ int* define(isint) {
     return malloc()
   }
   return malloc()
+}
+
+// Will likely be used for finding # on lines to remove comments
+int startsWithChar(char *line, char c) {
+  // Simple function made to tell if a line starts with a char c, if it returns 1, it is a comment, if it returns a 0, it is not a comment
+  if (line[0] == c) {
+    return 1
+  } else {
+    return 0
+  }
+}
+
+// Will most likely be implimented for use of finding = and :
+int containsChar(char *line, char c) {
+  // Simple function made to tell if a line contains a char c, if it returns 1, it is a comment, if it returns a 0, it is not a comment
+  if (strchr(line, c) != NULL) {
+    return 1
+  } else {
+    return 0
+  }
+}
+
+// Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
+char *firstWord(char *line, char c) {
+  for (int i; i < line.length; i++) {
+    if ((line[i] == 'c') || ((line[i] == ' ') || (line [i] == '\t'))) {
+      char *word[i];
+      strcpy(word, line, i*4);
+      return word;
+    }
+  }
+  return NULL;
 }
 
 void main() {
