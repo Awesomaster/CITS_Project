@@ -63,15 +63,8 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 #include <string.h>
 #include <stdio.h>
 
-#define DEFAULT 100;
 
-// Define allocates you memory and gives you a pointer for it, use: Variable's pointer = define(true); (given it is an int)
-int* define(isint) {
-  if (isint) {
-    return malloc()
-  }
-  return malloc()
-}
+// -------------------------- <String Manipulations> ---------------------------
 
 // Will likely be used for finding # on lines to remove comments
 int startsWithChar(char *line, char c) {
@@ -96,7 +89,6 @@ int containsChar(char *line, char c) {
 }
 
 // Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
-
 char *firstWord(char *line, char c) {
   int i;
   for (i = 0; i < 10; i = i + 1) {
@@ -110,7 +102,6 @@ char *firstWord(char *line, char c) {
 }
 
 // Returns everything past a certain character (removing unneccisary whitespace)
-
 char *endingOfLine(char *line, char c) {
   // Find the point at which the character occurs
   char* word = strchr(line, c);
@@ -122,6 +113,8 @@ char *endingOfLine(char *line, char c) {
   // !!_________Want to check the efficiency of this solution_________!!
   return word;
 }
+
+// -------------------------- </String Manipulations> ---------------------------
 
 void main() {
   File *fb;
