@@ -60,6 +60,9 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
  - Returns the rest of the string after (and including) the char c (we can use this to find what we what the variable to be defined by)
 */
 
+#include <string.h>
+#include <stdio.h>
+
 #define DEFAULT 100;
 
 // Define allocates you memory and gives you a pointer for it, use: Variable's pointer = define(true); (given it is an int)
@@ -74,32 +77,50 @@ int* define(isint) {
 int startsWithChar(char *line, char c) {
   // Simple function made to tell if a line starts with a char c, if it returns 1, it is a comment, if it returns a 0, it is not a comment
   if (line[0] == c) {
-    return 1
+    return 1;
   } else {
-    return 0
+    return 0;
   }
 }
 
 // Will most likely be implimented for use of finding = and :
 int containsChar(char *line, char c) {
   // Simple function made to tell if a line contains a char c, if it returns 1, it is a comment, if it returns a 0, it is not a comment
-  if (strchr(line, c) != NULL) {
-    return 1
+  char *str;
+  str = strchr(line, c);
+  if (str != NULL) {
+    return 1;
   } else {
-    return 0
+    return 0;
   }
 }
 
 // Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
+
 char *firstWord(char *line, char c) {
-  for (int i; i < line.length; i++) {
-    if ((line[i] == 'c') || ((line[i] == ' ') || (line [i] == '\t'))) {
-      char *word[i];
-      strcpy(word, line, i*4);
+  int i;
+  for (i = 0; i < 10; i = i + 1) {
+    if ((line[i] == c) || (line[i] == ' ')) {
+      char *word;
+      strncpy(word,line,i);
       return word;
     }
   }
-  return NULL;
+    return "I wish for large amounts of death";
+}
+
+// Returns everything past a certain character (removing unneccisary whitespace)
+
+char *endingOfLine(char *line, char c) {
+  // Find the point at which the character occurs
+  char* word = strchr(line, c);
+
+  // Find start of statement (ignoring whitespace) (by pushing the pointer forward)
+  while (word[0] == ' ' || word[0] == c) {
+    *word++;
+  }
+  // !!_________Want to check the efficiency of this solution_________!!
+  return word;
 }
 
 void main() {
