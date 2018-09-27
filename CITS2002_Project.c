@@ -43,9 +43,17 @@ Dictionary of meanings:
 # char *getcwd(char *str, size_t size): Return type string (char*); Copies an absolute pathname of the current working directory to a string str of length size, if work directory name length > size, return an error
 # int rand(void): Returns type int; Returns a pseudo-random number from [0,RAND_MAX], (RAND_MAX is something weird but its at least 32767 for some reason)
 #_Dont_Know_# char *getenv(char* name): Returns type string (char*): Searches environment list for the environment variable 'name' and returns a pointer to the value string corresponding to it
+ - Only example I can thing of is using PATH, and thus it should return all of the values assocated with path for your computer/program?
 #_Dont_Know_# int stat(char *path, struct stat *buf): Return tupe int; Stats the file pointed to by path and fills in buf
 # pid_t fork(void): Returns pid_t (in parent returns childs PID (or -1 if not success), in child returns 0 (if successful)); Creates a child process by duplicating the parent process, the new process is an exact duplicate of the parent bar a few things i.e. has a different PID
-
+#_Dont_Know_# int execl(char *path, char* arg,...): Dont really get
+# pid_t wait(int *status): Returns type pid; Suspends excecution of calling process until one of its children terminate
+# time_t mktime(struct tm *tm): Returns type time_t; Converts broken down time (see struct tm*), expressed as local time, to calender time representation
+#_Dont_Know_# int gettimeofday(struct timeval *tv, struct timezone *tz): Return type int; I dont really get what it returns because it says 0 for success??
+#_Dont_Know_# char *strptime(char *s, char *format, struct tm *tm): Return type string;
+# int getopt(int argc, char * const argv[], char *optstring): Return type int; Parses the command line argument
+# int chdir(char *path): Return type int; Changes the current working directory to path
+# void exit(int status): Ends the program returning with the exit status 'status'
 
 */
 
