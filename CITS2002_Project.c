@@ -31,14 +31,28 @@ Invocation and command-line options
 - getopt(), chdir(), exit()
 
 Dictionary of meanings:
-access():
+# int access(char *path, int mode): Return type int; Tells if you have access (r,w,x) of a particular path (amode = R_OK (read), W_OK (write), X_OK (execute), F_OK (exists))
+# File *fopen(char *path, int mode): Returns type File*; e.g. fopen("C:/Users/josh/Desktop/CITS2002.c", "r") will return the file located at that position and allow you to read it
+# char *fgets(char *str, int size, File *file): Returns type string (char*); Reads size-1 chars from the file and places them into the char* s; stops if it reads EOF; if it hits a \n, stores it and stops; terminating null byte stored at end
+# char *strdup(char *str): Return type char*; Returns a pointer to a new place in the memory (found my malloc), and places a duplicate of the string
+# int fclose(File *file): Return type int; Returns 0 when complete, otherwise it just flushes the stream pointed to by 'file'
+# void *calloc(size_t nummemb, size_t size): Return type pointer (void*); Allocates memory for nummenb elements of size bytes in sequence and returns a pointer to the starting byte
+# void *realloc(void *ptr, size_t size): Return type pointer (void*); Changes the size of the memory block pointed to by ptr and makes it size bytes, if new size > old, new memory will not be initialised
+# pid_t getpid(void): Returns type process id; Returns the process ID of the calling process
+# pid_t getppid(void): Returns type process id; Returns the process ID of the calling process's parent process
+# char *getcwd(char *str, size_t size): Return type string (char*); Copies an absolute pathname of the current working directory to a string str of length size, if work directory name length > size, return an error
+# int rand(void): Returns type int; Returns a pseudo-random number from [0,RAND_MAX], (RAND_MAX is something weird but its at least 32767 for some reason)
+#_Dont_Know_# char *getenv(char* name): Returns type string (char*): Searches environment list for the environment variable 'name' and returns a pointer to the value string corresponding to it
+#_Dont_Know_# int stat(char *path, struct stat *buf): Return tupe int; Stats the file pointed to by path and fills in buf
+# pid_t fork(void): Returns pid_t (in parent returns childs PID (or -1 if not success), in child returns 0 (if successful)); Creates a child process by duplicating the parent process, the new process is an exact duplicate of the parent bar a few things i.e. has a different PID
+
 
 */
 
-#define int DEFAULT 100;
+#define DEFAULT 100;
 
 
-char* inputfile(char* filename) {
+char* openfile(char* filename) {
   File *fb;
   fb = fopen(("%c.txt",filename), "r")
   return fgetc(fb);
