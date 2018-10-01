@@ -66,7 +66,9 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 
 #define MAXCHAR 1000
 
-// -------------------------- <String Manipulations> ---------------------------
+// -------------------------- <Start Of String Analysis> ---------------------------
+// Below we have a series of functions, startsWithChar, containsChar, firstWord and endingOfLine
+// These are used to search through strings and find out what needs to be found
 
 // Will likely be used for finding # on lines to remove comments
 int startsWithChar(char *line, char c) {
@@ -112,11 +114,11 @@ char *endingOfLine(char *line, char c) {
   while (word[0] == ' ' || word[0] == c) {
     *word++;
   }
-  // !!_________Want to check the efficiency of this solution_________!!
+  // !!_____________________Want to check the efficiency of this solution_____________________!!
   return word;
 }
 
-// -------------------------- </String Manipulations> ---------------------------
+// -------------------------- < End Of String Analysis> ---------------------------
 
 int main() {
   char input[100];
