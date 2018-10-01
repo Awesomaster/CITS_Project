@@ -95,12 +95,12 @@ int containsChar(char *line, char c) {
 // Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
 char *firstWord(char *line, char c) {
   int i;
-  for (i = 0; i < 10; i = i + 1) {
+  char* word;
+  for (i = 0; i < 50; i = i + 1) {
     if ((line[i] == c) || (line[i] == ' ')) {
-      char *word;
       strncpy(word,line,i);
       return word;
-    }
+    } 
   }
     return "I wish for large amounts of death";
 }
@@ -119,6 +119,9 @@ char *endingOfLine(char *line, char c) {
 }
 
 // -------------------------- < End Of String Analysis> ---------------------------
+//
+//
+// -------------------------- < Start Of Main > -----------------------------------
 
 int main() {
   char input[100];
@@ -127,7 +130,7 @@ int main() {
   gets(input);
 
   FILE *inputfile;
-  char str[MAXCHAR];
+  char line[MAXCHAR];
   char* filename = input; //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
   inputfile = fopen(filename, "r");
@@ -138,34 +141,34 @@ int main() {
   }
 
   // Read the file, line by line
-  while (fgets(str, MAXCHAR, inputfile) != NULL) {
-    printf("%s", str);
-    if (startsWithChar(str, '#')) {
+  while (fgets(line, MAXCHAR, inputfile) != NULL) {
+    printf("%s", line);
+    if (startsWithChar(line, '#')) {
       // Type Comment
       printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
-    } else if (containsChar(str,':')) {
+    } else if (containsChar(line,':')) {
       // Type Target Line
       char* targetname; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
       char* targetvalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
-      targetname = firstWord(str, ':');
-      targetvalue = endingOfLine(str, ':');
+      targetname = firstWord(line, ':');
+      targetvalue = endingOfLine(line, ':');
       printf("Above line is a target line with target %s and value %s\n", targetname, targetvalue);
-    } else if (containsChar(str, '=')) {
+    } else if (containsChar(line, '=')) {
       // Type Variable Definition
       char* variablename; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
       char* variablevalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
-      variablename = firstWord(str, '=');
-      variablevalue = endingOfLine(str, '=');
+      variablename = firstWord(line, '=');
+      variablevalue = endingOfLine(line, '=');
       printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
       printf("Name: %s, Value: %s\n", variablename, variablevalue);
-    } else if (startsWithChar(str, '\t')) {
+    } else if (startsWithChar(line, '\t')) {
       // Type Action Line
       printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     }
   }
 
-
-  // -------------------- / End of main. / --------------------
   fclose(inputfile);
   return 0;
 }
+
+// -------------------------- < End Of Main > -------------------------------------
