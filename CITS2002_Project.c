@@ -63,6 +63,7 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 #include <string.h>
 #include <stdio.h>
 
+#define MAXCHAR 1000
 
 // -------------------------- <String Manipulations> ---------------------------
 
@@ -116,20 +117,34 @@ char *endingOfLine(char *line, char c) {
 
 // -------------------------- </String Manipulations> ---------------------------
 
-void main() {
-  File *fb;
+int main() {
+  FILE *inputfile;
+  char str[MAXCHAR];
+  char* filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
-  //Statement.replace("C99","cc -std=c99 -Wall -pedantic -Werror")
-
-  /*num variables*sizeof(variable) or DEFAULT*/
-  if (/*size known*/) {
-    for (int i; i < numofvariabletypes; i++) {
-      variabletype = types[i];
-      int *pointer = malloc(numvariable*sizeof(variabletype));
-    }
-  } else {
-    int *pointer = malloc(DEFAULT);
+  inputfile = fopen(filename, "r");
+  // Check file is valid (and openning was successful)
+  if (inputfile == NULL) {
+    printf("Could not open file %s",filename);
+    return 1;
   }
 
-  fb = fopen("filename.txt", "r");
+  // Read the file, line by line
+  while (fgets(str, MAXCHAR, inputfile) != NULL) {
+    printf("%s", str);
+    if (startsWithChar(str, '#')) {
+      printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)");
+    } else if (containsChar(str,':')) {
+      printf("Above line is confusing and I dont get it yet... yet");
+    } else if (containsChar(str, '=')) {
+      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $, )");
+    } else if (containsChar(str, '\t')) {
+      printf("This contains ")
+    }
+  }
+
+
+  // End of main.
+  fclose(inputfile);
+  return 0;
 }
