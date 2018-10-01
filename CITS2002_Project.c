@@ -62,6 +62,7 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAXCHAR 1000
 
@@ -118,9 +119,14 @@ char *endingOfLine(char *line, char c) {
 // -------------------------- </String Manipulations> ---------------------------
 
 int main() {
+  char input[100];
+  printf("Currently testing using C:\\Users\\Josh\\Desktop\\inputfile.txt | C:\\Users\\Josh\\Desktop\\inputfile2.txt | C:\\Users\\Josh\\Desktop\\inputfile3.txt:\n");
+
+  gets(input);
+
   FILE *inputfile;
   char str[MAXCHAR];
-  char* filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
+  char* filename = input; //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
   inputfile = fopen(filename, "r");
   // Check file is valid (and openning was successful)
@@ -137,10 +143,19 @@ int main() {
       printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     } else if (containsChar(str,':')) {
       // Type Target Line
-      printf("Above line is a target line\n");
+      char* targetname; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      char* targetvalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      targetname = firstWord(str, ':');
+      targetvalue = endingOfLine(str, ':');
+      printf("Above line is a target line with target %s and value %s\n", targetname, targetvalue);
     } else if (containsChar(str, '=')) {
       // Type Variable Definition
-      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $, )\n");
+      char* variablename; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      char* variablevalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      variablename = firstWord(str, '=');
+      variablevalue = endingOfLine(str, '=');
+      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
+      printf("Name: %s, Value: %s\n", variablename, variablevalue);
     } else if (startsWithChar(str, '\t')) {
       // Type Action Line
       printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
@@ -148,7 +163,7 @@ int main() {
   }
 
 
-  // End of main.
+  // -------------------- / End of main. / --------------------
   fclose(inputfile);
   return 0;
 }
