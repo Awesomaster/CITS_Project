@@ -133,13 +133,17 @@ int main() {
   while (fgets(str, MAXCHAR, inputfile) != NULL) {
     printf("%s", str);
     if (startsWithChar(str, '#')) {
-      printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)");
+      // Type Comment
+      printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     } else if (containsChar(str,':')) {
-      printf("Above line is confusing and I dont get it yet... yet");
+      // Type Target Line
+      printf("Above line is a target line\n");
     } else if (containsChar(str, '=')) {
-      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $, )");
-    } else if (containsChar(str, '\t')) {
-      printf("This contains ")
+      // Type Variable Definition
+      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $, )\n");
+    } else if (startsWithChar(str, '\t')) {
+      // Type Action Line
+      printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     }
   }
 
