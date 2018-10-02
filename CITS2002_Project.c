@@ -95,12 +95,15 @@ int containsChar(char *line, char c) {
 // Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
 char *firstWord(char *line, char c) {
   int i;
-  char* word;
+
   for (i = 0; i < 50; i = i + 1) {
     if ((line[i] == c) || (line[i] == ' ')) {
+      char *word;
       strncpy(word,line,i);
+      word[i] = '\0';
+      // YEEEEEEEET
       return word;
-    } 
+    }
   }
     return "I wish for large amounts of death";
 }
@@ -128,10 +131,15 @@ int main() {
   printf("Currently testing using C:\\Users\\Josh\\Desktop\\inputfile.txt | C:\\Users\\Josh\\Desktop\\inputfile2.txt | C:\\Users\\Josh\\Desktop\\inputfile3.txt:\n");
 
   gets(input);
-
+  char* filename;
+  if (strcmp(input,"1") == 0) {
+    filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
+  } else {
+    filename = input;
+  }
   FILE *inputfile;
   char line[MAXCHAR];
-  char* filename = input; //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
+   //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
   inputfile = fopen(filename, "r");
   // Check file is valid (and openning was successful)
@@ -152,7 +160,8 @@ int main() {
       char* targetvalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
       targetname = firstWord(line, ':');
       targetvalue = endingOfLine(line, ':');
-      printf("Above line is a target line with target %s and value %s\n", targetname, targetvalue);
+      printf("Above line is a target line");
+      printf("Name: %s, Value: %s\n", targetname, targetvalue);
     } else if (containsChar(line, '=')) {
       // Type Variable Definition
       char* variablename; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
