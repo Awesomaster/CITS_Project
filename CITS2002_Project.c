@@ -65,6 +65,8 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 #include <stdlib.h>
 
 #define MAXCHAR 1000
+#define ARGMAX 1
+#define WORDSIZE 50
 
 // -------------------------- <Start Of String Analysis> ---------------------------
 // Below we have a series of functions, startsWithChar, containsChar, firstWord and endingOfLine
@@ -96,19 +98,18 @@ int containsChar(char *line, char c) {
 char *firstWord(char *line, char c) {
   int i;
 
-  for (i = 0; i < 50; i = i + 1) {
+  for (i = 0; i < WORDSIZE; i = i + 1) {
     if ((line[i] == c) || (line[i] == ' ')) {
       char *word;
       strncpy(word,line,i);
       word[i] = '\0';
-      // YEEEEEEEET
       return word;
     }
   }
     return "I wish for large amounts of death";
 }
 
-// Returns everything past a certain character (removing unneccisary whitespace)
+// Returns everything past a certain character (removing unneccesary whitespace)
 char *endingOfLine(char *line, char c) {
   // Find the point at which the character occurs
   char* word = strchr(line, c);
@@ -121,22 +122,31 @@ char *endingOfLine(char *line, char c) {
   return word;
 }
 
+// Replaces all copies of key with value in line
+char *replace(char *line, char *key, char *value) {
+  
+}
+
 // -------------------------- < End Of String Analysis> ---------------------------
 //
 //
 // -------------------------- < Start Of Main > -----------------------------------
 
-int main() {
-  char input[100];
-  printf("Currently testing using C:\\Users\\Josh\\Desktop\\inputfile.txt | C:\\Users\\Josh\\Desktop\\inputfile2.txt | C:\\Users\\Josh\\Desktop\\inputfile3.txt:\n");
-
-  gets(input);
+int main(int argc, char **argv) {
+  char *input;
   char* filename;
+  if ((argc-1) == ARGMAX) {
+    input = argv[1];
+  } else {
+    printf("You have entered %i arguments when only %i are permitted", argc, ARGMAX);
+    return 1;
+  }
   if (strcmp(input,"1") == 0) {
     filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
   } else {
     filename = input;
   }
+
   FILE *inputfile;
   char line[MAXCHAR];
    //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
@@ -156,22 +166,25 @@ int main() {
       printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     } else if (containsChar(line,':')) {
       // Type Target Line
-      char* targetname; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
-      char* targetvalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      char* targetname;
+      char* targetvalue;
       targetname = firstWord(line, ':');
       targetvalue = endingOfLine(line, ':');
       printf("Above line is a target line");
       printf("Name: %s, Value: %s\n", targetname, targetvalue);
     } else if (containsChar(line, '=')) {
       // Type Variable Definition
-      char* variablename; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
-      char* variablevalue; // THESE DO NOT WORK PERFECTLY, AS WHEN YOU ASSIGN SOMETHING THEY DO NOT GET REMOVED FROM MEMORY AND NEXT VARIABLE WITH OVERWRITE THE LAST OPPOSED TO REMOVING THE LAST AND BEING A NEW STRING
+      char* variablename;
+      char* variablevalue;
       variablename = firstWord(line, '=');
       variablevalue = endingOfLine(line, '=');
       printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
       printf("Name: %s, Value: %s\n", variablename, variablevalue);
     } else if (startsWithChar(line, '\t')) {
       // Type Action Line
+      //if (lastlinetype == targetline || action line) {
+        //run line through command terminal
+      //}
       printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     }
   }
