@@ -143,12 +143,14 @@ char *replace(char *line, char *key, char *value) {
 // -------------------------- < Start Of Main > -----------------------------------
 
 int main(int argc, char **argv) {
+  File *inputfile;
+  char line[MAXCHAR];
   char *input;
   char* filename;
   if ((argc-1) == ARGMAX) {
     input = argv[1];
   } else {
-    printf("You have entered %i arguments when only %i are permitted", argc, ARGMAX);
+    printf("You have entered %i arguments when only %i are permitted", argc-1, ARGMAX);
     return 1;
   }
   if (strcmp(input,"1") == 0) {
@@ -157,8 +159,6 @@ int main(int argc, char **argv) {
     filename = input;
   }
 
-  FILE *inputfile;
-  char line[MAXCHAR];
    //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
   inputfile = fopen(filename, "r");
