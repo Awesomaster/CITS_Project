@@ -63,10 +63,11 @@ char *strchr(char *str, char c): Finds the first instance of a char c in the str
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MAXCHAR 1000
 #define ARGMAX 1
-#define WORDSIZE 50
+
 
 // -------------------------- <Start Of String Analysis> ---------------------------
 // Below we have a series of functions, startsWithChar, containsChar, firstWord and endingOfLine
@@ -94,22 +95,31 @@ int containsChar(char *line, char c) {
   }
 }
 
-// Will find the first word in a line which is terminated by either whitespace, a tab or a defined character
-char *firstWord(char *line, char c) {
-  int i;
-
-  for (i = 0; i < WORDSIZE; i = i + 1) {
+// Will find the first word in a line which is terminated by either whitespace or a defined character
+char *firstWord(char *line, char c) {\
+  int i = 0;
+  while (true) {
     if ((line[i] == c) || (line[i] == ' ')) {
       char *word;
       strncpy(word,line,i);
       word[i] = '\0';
       return word;
     }
+    i++;
   }
-    return "I wish for large amounts of death";
+    return "There either is no firstWord or there is an issue";
 }
 
-// Returns everything past a certain character (removing unneccesary whitespace)
+// Returns the word after a particular character
+char *wordAfter(char*line, char c) {
+  char* word = strchr(line, c);
+  while (word[0] != ' ') {
+    *word++;
+  }
+  return word;
+}
+
+// Returns everything past a certain character (removing unneccesary whitespace at the beginning)
 char *endingOfLine(char *line, char c) {
   // Find the point at which the character occurs
   char* word = strchr(line, c);
@@ -124,7 +134,7 @@ char *endingOfLine(char *line, char c) {
 
 // Replaces all copies of key with value in line
 char *replace(char *line, char *key, char *value) {
-  
+
 }
 
 // -------------------------- < End Of String Analysis> ---------------------------
@@ -163,9 +173,11 @@ int main(int argc, char **argv) {
     printf("%s", line);
     if (startsWithChar(line, '#')) {
       // Type Comment
+      // Ignore this line
       printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     } else if (containsChar(line,':')) {
       // Type Target Line
+      // DONT KNOW
       char* targetname;
       char* targetvalue;
       targetname = firstWord(line, ':');
@@ -174,6 +186,7 @@ int main(int argc, char **argv) {
       printf("Name: %s, Value: %s\n", targetname, targetvalue);
     } else if (containsChar(line, '=')) {
       // Type Variable Definition
+      // Get the first bit, and every time $(first bit) is written, replace with second bit
       char* variablename;
       char* variablevalue;
       variablename = firstWord(line, '=');
