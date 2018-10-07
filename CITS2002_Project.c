@@ -143,7 +143,7 @@ char *replace(char *line, char *key, char *value) {
 // -------------------------- < Start Of Main > -----------------------------------
 
 int main(int argc, char **argv) {
-  File *inputfile;
+  FILE *inputfile;
   char line[MAXCHAR];
   char *input;
   char* filename;
