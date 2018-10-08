@@ -110,8 +110,17 @@ char *firstWord(char *line, char c) {\
     return "There either is no firstWord or there is an issue";
 }
 
+char *wordBefore(char *line, char c) {
+  char *word = strchr(line, c);
+  while (word[0] != ' ')
+  {
+    *word--;
+  }
+  return word;
+}
+
 // Returns the word after a particular character
-char *wordAfter(char*line, char c) {
+char *wordAfter(char *line, char c) {
   char* word = strchr(line, c);
   while (word[0] != ' ') {
     *word++;
