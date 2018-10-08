@@ -134,7 +134,7 @@ char *endingOfLine(char *line, char c) {
 
 // Replaces all copies of key with value in line
 char *replace(char *line, char *key, char *value) {
-  
+
 }
 
 // -------------------------- < End Of String Analysis> ---------------------------
@@ -147,12 +147,16 @@ int main(int argc, char **argv) {
   char line[MAXCHAR];
   char *input;
   char* filename;
-  if ((argc-1) == ARGMAX) {
-    input = argv[1];
+  char *dependencyList[] = {"-C", "-f", "-i", "-n", "-p", "-s"};
+  
+  if ((argc-1) >= ARGMAX) {
+    input = argv[argc-1];
+    // Dependences are 1-(argc-2)
   } else {
-    printf("You have entered %i arguments when only %i are permitted", argc-1, ARGMAX);
+    printf("You have entered %i argument/s when you require at least %i", argc-1, ARGMAX);
     return 1;
   }
+
   if (strcmp(input,"1") == 0) {
     filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
   } else {
