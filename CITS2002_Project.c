@@ -110,15 +110,6 @@ char *firstWord(char *line, char c) {\
     return "There either is no firstWord or there is an issue";
 }
 
-char *wordBefore(char *line, char c) {
-  char *word = strchr(line, c);
-  while (word[0] != ' ')
-  {
-    *word--;
-  }
-  return word;
-}
-
 // Returns the word after a particular character
 char *wordAfter(char *line, char c) {
   char* word = strchr(line, c);
@@ -143,7 +134,7 @@ char *endingOfLine(char *line, char c) {
 
 // Replaces all copies of key with value in line
 char *replace(char *line, char *key, char *value) {
-
+  
 }
 
 // -------------------------- < End Of String Analysis> ---------------------------
