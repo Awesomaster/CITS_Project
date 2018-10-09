@@ -45,6 +45,7 @@ char *firstWord(char *line, char c) {
 }
 
 // Returns the word after a particular character
+/*
 char *wordAfter(char *line, char c) {
     char *word = strchr(line, c);
     while (word[0] != ' ') {
@@ -52,6 +53,7 @@ char *wordAfter(char *line, char c) {
     }
     return word;
 }
+*/
 
 // Returns everything past a certain character (removing unneccesary whitespace at the beginning)
 char *endingOfLine(char *line, char c) {

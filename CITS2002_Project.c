@@ -15,15 +15,35 @@ int main(int argc, char **argv) {
   char *input;
   char* filename;
   char *dependencyList[] = {"-C", "-f", "-i", "-n", "-p", "-s"};
+  int itrue = 0;
+  int ntrue = 0;
+  int ptrue = 0;
+  int strue = 0;
 
   if ((argc-1) >= ARGMAX) {
-    input = argv[argc-1];
-    // Dependences are 1 to (argc-2)
+    // input = argv[argc-1];
+    // Dependences can be all
     for (int i = 0; i < argc-1; i++) {
       if (strcmp(argv[i], dependencyList[0])) {
+        // Change the directory (using the next string) -C
         chdir(argv[i+1]);
-      } else if (strcmp(argv[i], dependencyList[0])) {
-        
+      } else if (strcmp(argv[i], dependencyList[1])) {
+        // Change the file (from default) -f
+        input = argv[i+1];
+      } else if (strcmp(argv[i], dependencyList[2])) {
+        // Ignore unsuccessful termination of actions -i
+        // Return of getopt is always 1
+        itrue = 1;
+      } else if (strcmp(argv[i], dependencyList[3])) {
+        // Print all action lines and dont -n
+        // Instead of running, print
+        ntrue = 1;
+      } else if (strcmp(argv[i], dependencyList[4])) {
+        // -p
+        ptrue = 1;
+      } else if (strcmp(argv[i], dependencyList[5])) {
+        // -s
+        strue = 1;
       }
     }
   } else {
@@ -53,7 +73,7 @@ int main(int argc, char **argv) {
       // Type Comment
       // Ignore this line
       printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
-    } else if (containsChar(line,':')) {
+    } else if (containsChar(line,':') && containsChar(firstWord(line, ':'),'.')) {
       // Type Target Line
       // DONT KNOW
       char* targetname;
@@ -62,6 +82,12 @@ int main(int argc, char **argv) {
       targetvalue = endingOfLine(line, ':');
       printf("Above line is a target line");
       printf("Name: %s, Value: %s\n", targetname, targetvalue);
+    } else if (startsWithChar(line, '\t')) {
+      // Type Action Line
+      /*if (lastlinetype == targetline || action line) {
+          run line through command terminal
+      */
+      printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     } else if (containsChar(line, '=')) {
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
@@ -71,13 +97,7 @@ int main(int argc, char **argv) {
       variablevalue = endingOfLine(line, '=');
       printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
       printf("Name: %s, Value: %s\n", variablename, variablevalue);
-    } else if (startsWithChar(line, '\t')) {
-      // Type Action Line
-      /*if (lastlinetype == targetline || action line) {
-          run line through command terminal
-      */
-      printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
-    }
+    } 
   }
 
   fclose(inputfile);
