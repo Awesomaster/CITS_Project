@@ -6,6 +6,6 @@
 
 // Do something with an actionLine
 
-void actionLine(char* line) {
+void actionLine(char* line, int i, int n, int p, int s) {
     
 }
