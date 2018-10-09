@@ -80,7 +80,14 @@ int main(int argc, char **argv) {
 
   if ((argc-1) >= ARGMAX) {
     input = argv[argc-1];
-    // Dependences are 1-(argc-2)
+    // Dependences are 1 to (argc-2)
+    for (int i = 0; i < argc-1; i++) {
+      if (strcmp(argv[i], dependencyList[0])) {
+        chdir(argv[i+1]);
+      } else if (strcmp(argv[i], dependencyList[0])) {
+        
+      }
+    }
   } else {
     printf("You have entered %i argument/s when you require at least %i", argc-1, ARGMAX);
     return 1;
@@ -128,9 +135,9 @@ int main(int argc, char **argv) {
       printf("Name: %s, Value: %s\n", variablename, variablevalue);
     } else if (startsWithChar(line, '\t')) {
       // Type Action Line
-      //if (lastlinetype == targetline || action line) {
-        //run line through command terminal
-      //}
+      /*if (lastlinetype == targetline || action line) {
+          run line through command terminal
+      */
       printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     }
   }
