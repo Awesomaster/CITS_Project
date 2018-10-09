@@ -1,5 +1,4 @@
 # CITS_Project
-<<<<<<< HEAD
 
 /*
 The text lines within bake's specification file are of four forms -
@@ -62,6 +61,4 @@ SELF RESEARCH: (Useful functions)
 char *strchr(char *str, char c): Finds the first instance of a char c in the string and returns a pointer to that char otherwise returns NULL (we can use this to find either the : or the = in a line to tell if it is a variable definition or something else...)
  - Returns the rest of the string after (and including) the char c (we can use this to find what we what the variable to be defined by)
 */
-=======
 oh hi hello
->>>>>>> 3ee292c1f2a8ccaf02a4fa1089fd12c6120a781b
