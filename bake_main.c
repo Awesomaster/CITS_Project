@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "variableLine.h"
+#include "variableLine.h" // Includes targetLine.c which includes actionLine/c which includes stringAnalysis/c
 
 #define MAXCHAR 1000
 #define ARGMAX 1
@@ -59,37 +59,46 @@ int main(int argc, char **argv) {
   }
 
   // Read the file, line by line
+  int lastline = 0; // Useful for actionLine
   while (fgets(line, MAXCHAR, inputfile) != NULL) {
     printf("%s", line);
     if (startsWithChar(line, '#')) {
       // Type Comment
       // Ignore this line
-      printf("Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
-    } else if (containsChar(line,':') && containsChar(firstWord(line, ':'),'.')) {
+      lastline = 0; // Comment thus not useful for actionLines
+      printf("/---/ Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
+    } else if (containsChar(line,':')) {
       // Type Target Line
-      // DONT KNOW
       char* targetname;
       char* targetvalue;
       targetname = firstWord(line, ':');
       targetvalue = endingOfLine(line, ':');
-      printf("Above line is a target line");
-      printf("Name: %s, Value: %s\n", targetname, targetvalue);
+      printf("/---/ Above line is a target line\n");
+      printf("/---/ Name: %s, Value: %s\n", targetname, targetvalue);
+      targetLine(line);
+      lastline = 1;
     } else if (startsWithChar(line, '\t')) {
       // Type Action Line
       /*if (lastlinetype == targetline || action line) {
           run line through command terminal
       */
       //actionLine(line, itrue, ntrue, ptrue, strue);
-      printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
+      if (lastline == 1) {
+        actionLine(line, itrue, ntrue, ptrue, strue);
+      }
+      printf("/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
+      lastline = 1;
     } else if (containsChar(line, '=')) {
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
+      
       char* variablename;
       char* variablevalue;
       variablename = firstWord(line, '=');
       variablevalue = endingOfLine(line, '=');
-      printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
-      printf("Name: %s, Value: %s\n", variablename, variablevalue);
+      printf("/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
+      printf("/---/ Name: %s, Value: %s\n", variablename, variablevalue);
+      lastline = 0;
     }
   }
 

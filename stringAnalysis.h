@@ -52,16 +52,25 @@ char *firstWord(char *line, char c) {
     return "There either is no firstWord or there is an issue";
 }
 
+int indexOfChar(char* line, char c) {
+    char *posSpace = strchr(line, ' ');
+    int spaceIndex = (int)(posSpace - line);
+    return spaceIndex;
+}
+
 // Returns the word after a particular character
-/*
+
 char *wordAfter(char *line, char c) {
     char *word = strchr(line, c);
-    while (word[0] != ' ') {
+    while (word[0] == ' ' || word[0] == c) {
         *word++;
     }
-    return word;
+    
+    char* tempWord; 
+    strcpy(tempWord, word);
+    tempWord[indexOfChar(word, ' ')] = '\0';
+    return tempWord;
 }
-*/
 
 // Returns everything past a certain character (removing unneccesary whitespace at the beginning)
 char *endingOfLine(char *line, char c) {
