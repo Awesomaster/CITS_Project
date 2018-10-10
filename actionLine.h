@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "stringAnalysis.h"
 
+void actionLine(char* line, int iistrue, int nistrue, int pistrue, int sistrue);
+
 // Do something with an actionLine
 
 void actionLine(char* line, int iistrue, int nistrue, int pistrue, int sistrue) {
@@ -12,7 +14,7 @@ void actionLine(char* line, int iistrue, int nistrue, int pistrue, int sistrue) 
         exitstatus = 1;
     } 
     if (nistrue) {
-        printf(line);
+        fprintf(stdout, line);
         //dont run lines
         exit(1);
     }

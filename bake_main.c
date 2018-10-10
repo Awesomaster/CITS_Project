@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "stringAnalysis.h"
+#include "variableLine.h"
 
 #define MAXCHAR 1000
 #define ARGMAX 1
@@ -22,18 +22,12 @@ int main(int argc, char **argv) {
     // input = argv[argc-1];
     // Dependences can be all
     for (int i = 0; i < argc-1; i++) {
-      printf("1. %s",argv[i]);
-      printf("\n");
       if (strcmp(argv[i], dependencyList[0])==0) {
         // Change the directory (using the next string) -C
         chdir(argv[i+1]);
-        printf("2. %s", argv[i+1]);
-        printf("\n");
       } else if (strcmp(argv[i], dependencyList[1])==0) {
         // Change the file (from default) -f
         filename = argv[i+1];
-        printf("3. %s", filename);
-        printf("\n");
       } else if (strcmp(argv[i], dependencyList[2])==0) {
         // Ignore unsuccessful termination of actions -i
         // Return of getopt is always 1
@@ -45,7 +39,7 @@ int main(int argc, char **argv) {
       } else if (strcmp(argv[i], dependencyList[4])==0) {
         // -p
         ptrue = 1;
-      } else if (strcmp(argv[i], dependencyList[5])) {
+      } else if (strcmp(argv[i], dependencyList[5])==0) {
         // -s
         strue = 1;
       }
@@ -85,6 +79,7 @@ int main(int argc, char **argv) {
       /*if (lastlinetype == targetline || action line) {
           run line through command terminal
       */
+      //actionLine(line, itrue, ntrue, ptrue, strue);
       printf("This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
     } else if (containsChar(line, '=')) {
       // Type Variable Definition

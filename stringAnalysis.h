@@ -9,6 +9,7 @@ char *firstWord(char *line, char c);
 char *endingOfLine(char *line, char c);
 char *replace(char *line, char *key, char *value);
 
+
 // -------------------------- <Start Of String Analysis> ---------------------------
 // Below we have a series of functions, startsWithChar, containsChar, firstWord and endingOfLine
 // These are used to search through strings and find out what needs to be found
