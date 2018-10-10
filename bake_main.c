@@ -7,8 +7,6 @@
 #define MAXCHAR 1000
 #define ARGMAX 1
 
-// -------------------------- < Start Of Main > -----------------------------------
-
 int main(int argc, char **argv) {
   FILE *inputfile;
   char line[MAXCHAR];
@@ -103,5 +101,3 @@ int main(int argc, char **argv) {
   fclose(inputfile);
   return 0;
 }
-
-// -------------------------- < End Of Main > -------------------------------------
