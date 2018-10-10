@@ -3,11 +3,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int startsWithChar(char *line, char c);
+int containsChar(char *line, char c);
+char *firstWord(char *line, char c);
+char *endingOfLine(char *line, char c);
+char *replace(char *line, char *key, char *value);
+
 // -------------------------- <Start Of String Analysis> ---------------------------
 // Below we have a series of functions, startsWithChar, containsChar, firstWord and endingOfLine
 // These are used to search through strings and find out what needs to be found
 
 // Will likely be used for finding # on lines to remove comments
+
 int startsWithChar(char *line, char c) {
     // Simple function made to tell if a line starts with a char c, if it returns 1, it is a comment, if it returns a 0, it is not a comment
     if (line[0] == c) {

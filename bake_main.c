@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <stringAnalysis.c>
+#include <unistd.h>
+#include "stringAnalysis.h"
 
 #define MAXCHAR 1000
 #define ARGMAX 1
@@ -10,8 +11,7 @@
 int main(int argc, char **argv) {
   FILE *inputfile;
   char line[MAXCHAR];
-  char *input;
-  char* filename;
+  char *filename;
   char *dependencyList[] = {"-C", "-f", "-i", "-n", "-p", "-s"};
   int itrue = 0;
   int ntrue = 0;
@@ -22,21 +22,27 @@ int main(int argc, char **argv) {
     // input = argv[argc-1];
     // Dependences can be all
     for (int i = 0; i < argc-1; i++) {
-      if (strcmp(argv[i], dependencyList[0])) {
+      printf("1. %s",argv[i]);
+      printf("\n");
+      if (strcmp(argv[i], dependencyList[0])==0) {
         // Change the directory (using the next string) -C
         chdir(argv[i+1]);
-      } else if (strcmp(argv[i], dependencyList[1])) {
+        printf("2. %s", argv[i+1]);
+        printf("\n");
+      } else if (strcmp(argv[i], dependencyList[1])==0) {
         // Change the file (from default) -f
-        input = argv[i+1];
-      } else if (strcmp(argv[i], dependencyList[2])) {
+        filename = argv[i+1];
+        printf("3. %s", filename);
+        printf("\n");
+      } else if (strcmp(argv[i], dependencyList[2])==0) {
         // Ignore unsuccessful termination of actions -i
         // Return of getopt is always 1
         itrue = 1;
-      } else if (strcmp(argv[i], dependencyList[3])) {
+      } else if (strcmp(argv[i], dependencyList[3])==0) {
         // Print all action lines and dont -n
         // Instead of running, print
         ntrue = 1;
-      } else if (strcmp(argv[i], dependencyList[4])) {
+      } else if (strcmp(argv[i], dependencyList[4])==0) {
         // -p
         ptrue = 1;
       } else if (strcmp(argv[i], dependencyList[5])) {
@@ -47,12 +53,6 @@ int main(int argc, char **argv) {
   } else {
     printf("You have entered %i argument/s when you require at least %i", argc-1, ARGMAX);
     return 1;
-  }
-
-  if (strcmp(input,"1") == 0) {
-    filename = "C:\\Users\\Josh\\Desktop\\inputfile.txt";
-  } else {
-    filename = input;
   }
   
    //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
       variablevalue = endingOfLine(line, '=');
       printf("Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
       printf("Name: %s, Value: %s\n", variablename, variablevalue);
-    } 
+    }
   }
 
   fclose(inputfile);

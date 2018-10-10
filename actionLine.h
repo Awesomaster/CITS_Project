@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <stringAnalysis.c>
+#include "stringAnalysis.h"
 
 // Do something with an actionLine
 
