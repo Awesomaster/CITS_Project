@@ -7,75 +7,53 @@
 
 #define MAXCHAR 1000
 #define ARGMAX 1
+#define OPTLIST "C:f:inps"
 
 int main(int argc, char **argv)
 {
   FILE *inputfile;
   char line[MAXCHAR];
   char *filename;
-  char *dependencyList[] = {"-C", "-f", "-i", "-n", "-p", "-s"};
+
+  // --- Optional Modifiers Start ---
+  int opt;
+  opterr = 0;
   int itrue = 0;
   int ntrue = 0;
   int ptrue = 0;
   int strue = 0;
-
-  typedef struct {
-    char *name;
-    char *key;
-    char **dependencies;
-    char **actionLines;
-
-    int *fileCharacteristics; //0th is i, 1st is n, 2nd is p, 3rd is s
-
-  } LINE;
-
-  LINE line[15];
-
-  if ((argc - 1) >= ARGMAX)
-  {
-    // input = argv[argc-1];
-    // Dependences can be all
-    for (int i = 0; i < argc - 1; i++)
-    {
-      if (strcmp(argv[i], dependencyList[0]) == 0)
-      {
-        // Change the directory (using the next string) -C
-        chdir(argv[i + 1]);
-      }
-      else if (strcmp(argv[i], dependencyList[1]) == 0)
-      {
-        // Change the file (from default) -f
-        filename = argv[i + 1];
-      }
-      else if (strcmp(argv[i], dependencyList[2]) == 0)
-      {
-        // Ignore unsuccessful termination of actions -i
-        // Return of getopt is always 1
-        itrue = 1;
-      }
-      else if (strcmp(argv[i], dependencyList[3]) == 0)
-      {
-        // Print all action lines and dont -n
-        // Instead of running, print
-        ntrue = 1;
-      }
-      else if (strcmp(argv[i], dependencyList[4]) == 0)
-      {
-        // -p
-        ptrue = 1;
-      }
-      else if (strcmp(argv[i], dependencyList[5]) == 0)
-      {
-        // -s
-        strue = 1;
-      }
+  while ((opt = getopt(argc, argv, OPTLIST)) != -1) {
+    if (opt == 'C') {
+      // Change the directory (using the next string) -C
+      chdir(optarg);
+    }
+    else if (opt == 'f') {
+      // Change the file (from default) -f
+      filename = strdup(optarg);
+    }
+    else if (opt == 'i') {
+      // Ignore unsuccessful termination of actions -i
+      // Return of getopt is always 1
+      itrue = 1;
+    }
+    else if (opt == 'n') {
+      // Print all action lines and dont -n
+      // Instead of running, print
+      ntrue = 1;
+    }
+    else if (opt == 'p') {
+      // -p
+      ptrue = 1;
+    }
+    else if (opt == 's') {
+      // -s
+      strue = 1;
+    }
+    else {
+      argc = -1;
     }
   }
-  else
-  {
-    printf("You have entered %i argument/s when you require at least %i", argc - 1, ARGMAX);
-    return 1;
-  }
+  // --- Optional Modifiers End ---
 
   //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
@@ -87,55 +65,65 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  typedef struct
+  {
+    char *name;
+    char *key;
+    char **dependencies;
+    char **actionLines;
+
+    int *fileCharacteristics; //0th is i, 1st is n, 2nd is p, 3rd is s
+
+  } LINE;
+
+  // --- START OF READING LINES ---
   // Read the file, line by line
   int lastline = 0; // Useful for actionLine
-  while (fgets(line, MAXCHAR, inputfile) != NULL)
-  {
+  LINE currentLine;
+  while (fgets(line, MAXCHAR, inputfile) != NULL) {
+
     printf("%s", line);
-    if (startsWithChar(line, '#'))
-    {
+    if (startsWithChar(line, '#')) {
       // Type Comment
       // Ignore this line
       lastline = 0; // Comment thus not useful for actionLines
       printf("/---/ Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     }
-    else if (startsWithChar(line, '\t'))
-    {
+    else if (startsWithChar(line, '\t')) {
       // Type Action Line
       /*if (lastlinetype == targetline || action line) {
           run line through command terminal
       */
-      //actionLine(line, itrue, ntrue, ptrue, strue);
-      if (lastline == 1)
+      if (lastline >= 1)
       {
-        actionLine(line, itrue, ntrue, ptrue, strue);
+        currentLine.actionLines[lastline-1] = line;
+        printf("/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
+        lastline = lastline + 1; // If a line after is also a target it will be linked
       }
-      printf("/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
-      lastline = 1;
+
     }
     else if (containsChar(line, ':'))
     {
       // Type Target Line
-      char *targetname;
-      char *targetvalue;
-      targetname = firstWord(line, ':');
-      targetvalue = endingOfLine(line, ':');
+      currentLine.name = firstWord(line, ':');
+      currentLine.key = endingOfLine(line, ':');
+
       printf("/---/ Above line is a target line\n");
-      printf("/---/ Name: %s, Value: %s\n", targetname, targetvalue);
-      targetLine(line);
+      printf("/---/ Name: %s, Value: %s\n", currentLine.name, currentLine.key);
       lastline = 1;
     }
     else if (containsChar(line, '='))
     {
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
-
-      char *variablename;
-      char *variablevalue;
-      variablename = firstWord(line, '=');
-      variablevalue = endingOfLine(line, '=');
+      currentLine.name = firstWord(line, '=');
+      currentLine.key = endingOfLine(line, '=');
       printf("/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
-      printf("/---/ Name: %s, Value: %s\n", variablename, variablevalue);
+      printf("/---/ Name: %s, Value: %s\n", currentLine.name, currentLine.key);
+      lastline = 0;
+    }
+    else {
+      // To make sure we dont allow action lines to continue counting up
       lastline = 0;
     }
   }
