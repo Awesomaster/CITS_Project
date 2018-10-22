@@ -20,11 +20,13 @@ int main(int argc, char **argv)
   int strue = 0;
 
   typedef struct {
-    char* name;
-    char** dependencies;
-    char* key; 
-    int* fileCharacteristics; //0th is i, 1st is n, 2nd is p, 3rd is s
-    
+    char *name;
+    char *key;
+    char **dependencies;
+    char **actionLines;
+
+    int *fileCharacteristics; //0th is i, 1st is n, 2nd is p, 3rd is s
+
   } LINE;
 
   LINE line[15];
