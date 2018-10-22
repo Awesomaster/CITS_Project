@@ -79,15 +79,15 @@ int main(int argc, char **argv)
   // --- START OF READING LINES ---
   // Read the file, line by line
   int lastline = 0; // Useful for actionLine
-  LINE currentLine;
+  LINE *wholeFile = malloc(sizeof(LINE));
+  int currentLine = 0; // Integer used to store the current possition in wholeFile
   while (fgets(line, MAXCHAR, inputfile) != NULL) {
-
     printf("%s", line);
     if (startsWithChar(line, '#')) {
       // Type Comment
       // Ignore this line
       lastline = 0; // Comment thus not useful for actionLines
-      printf("/---/ Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
+      // printf("/---/ Above line is a comment thus provides no useful information (to a simple computer like me :D)\n");
     }
     else if (startsWithChar(line, '\t')) {
       // Type Action Line
@@ -96,30 +96,37 @@ int main(int argc, char **argv)
       */
       if (lastline >= 1)
       {
-        currentLine.actionLines[lastline-1] = line;
-        printf("/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
-        lastline = lastline + 1; // If a line after is also a target it will be linked
+        wholeFile[currentLine].actionLines[lastline-1] = line;
+        // printf("\n/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
+        lastline += 1; // If a line after is also a target it will be linked
       }
-
     }
     else if (containsChar(line, ':'))
     {
+      // Need new line since starting a targetLine
+      currentLine += 1;
+      realloc(wholeFile, (currentLine + 1) * sizeof(LINE));
+
       // Type Target Line
-      currentLine.name = firstWord(line, ':');
-      currentLine.key = endingOfLine(line, ':');
+      wholeFile[currentLine].name = firstWord(line, ':');
+      wholeFile[currentLine].key = endingOfLine(line, ':');
 
       printf("/---/ Above line is a target line\n");
-      printf("/---/ Name: %s, Value: %s\n", currentLine.name, currentLine.key);
+      printf("/---/ Name: %s, Value: %s\n", wholeFile[currentLine].name, wholeFile[currentLine].key);
       lastline = 1;
     }
     else if (containsChar(line, '='))
     {
+      // Need new line since starting a variableDefinition
+      currentLine += 1;
+      realloc(wholeFile, (currentLine + 1) * sizeof(LINE));
+
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
-      currentLine.name = firstWord(line, '=');
-      currentLine.key = endingOfLine(line, '=');
+      wholeFile[currentLine].name = firstWord(line, '=');
+      wholeFile[currentLine].key = endingOfLine(line, '=');
       printf("/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
-      printf("/---/ Name: %s, Value: %s\n", currentLine.name, currentLine.key);
+      printf("/---/ Name: %s, Value: %s\n", wholeFile[currentLine].name, wholeFile[currentLine].key);
       lastline = 0;
     }
     else {
@@ -127,7 +134,10 @@ int main(int argc, char **argv)
       lastline = 0;
     }
   }
-
+  for (int i = 0; i < currentLine; i++) {
+    printf("%i, %s, %s\n", i, wholeFile[i].name, wholeFile[i].key);
+  }
+  
   fclose(inputfile);
   return 0;
 }
