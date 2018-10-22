@@ -4,24 +4,29 @@
 #include <stdbool.h>
 #include "stringAnalysis.h"
 
-void actionLine(char* line, int iistrue, int nistrue, int pistrue, int sistrue);
+void actionLine(char *line, int iistrue, int nistrue, int pistrue, int sistrue);
 
 // Do something with an actionLine
 
-void actionLine(char* line, int iistrue, int nistrue, int pistrue, int sistrue) {
+void actionLine(char *line, int iistrue, int nistrue, int pistrue, int sistrue)
+{
     int exitstatus = 0;
-    if (iistrue) {
+    if (iistrue)
+    {
         exitstatus = 1;
-    } 
-    if (nistrue) {
+    }
+    if (nistrue)
+    {
         fprintf(stdout, line);
         //dont run lines
         exit(1);
     }
-    if (pistrue) {
+    if (pistrue)
+    {
         //
     }
-    if (sistrue) {
+    if (sistrue)
+    {
         //dont print anything!
     }
 }
