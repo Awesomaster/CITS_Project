@@ -90,7 +90,6 @@ char *endingOfLine(char *line, char c)
 {
     // Find the point at which the character occurs
     char *word = strchr(line, c);
-
     // Find start of statement (ignoring whitespace) (by pushing the pointer forward)
     while (word[0] == ' ' || word[0] == c)
     {
