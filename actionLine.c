@@ -1,3 +1,11 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "structs.h"
+#include "stringAnalysis.h"
+#include "actionLine.h"
+
 void pushAction(char *action, ACTIONLINE *wholeActionline)
 {
     ACTIONLINE *actionline = calloc(1, sizeof(ACTIONLINE));
@@ -9,7 +17,7 @@ void pushAction(char *action, ACTIONLINE *wholeActionline)
     }
 
     actionline->actionLine = action;
-    actionline->nextAction = wholeActionline;
+    actionline->next = wholeActionline;
     wholeActionline = actionline;
 }
 

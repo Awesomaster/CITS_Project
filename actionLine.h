@@ -2,8 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "stringAnalysis.h"
+#include "structs.h"
 
+void pushAction(char *action, ACTIONLINE *wholeActionline);
+void addActionLine(TARGETLINE *line, ACTIONLINE *actionLine);
+
+    /*
 void actionLine(char *line, int iistrue, int nistrue, int pistrue, int sistrue);
 
 // Do something with an actionLine
@@ -30,3 +34,4 @@ void actionLine(char *line, int iistrue, int nistrue, int pistrue, int sistrue)
         //dont print anything!
     }
 }
+*/

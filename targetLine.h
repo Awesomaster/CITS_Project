@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "actionLine.h"
 
+
+/*
 void targetLine(char *line);
 
 #define MAX_LINES 50
@@ -44,3 +46,4 @@ void targetLine(char *line)
         }
     }
 }
+*/

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include "structs.c"
+#include "structs.h"
 #include "constants.c"
 
 void pushTargetLine(TARGETLINE *wholeFile, char *name, DEPENDENCY *dependencies, int fileCharacteristics)
@@ -12,7 +12,7 @@ void pushTargetLine(TARGETLINE *wholeFile, char *name, DEPENDENCY *dependencies,
 
     if (targline == NULL)
     {
-        fprintf(stderr, "Error in pushing new line with values %s\n", name);
+        fprintf(stderr, "Error in pushing new targetline with values %s\n", name);
         perror(__func__);
         exit(EXIT_FAILURE);
     }

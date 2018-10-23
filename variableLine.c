@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "structs.c"
+#include "structs.h"
 #include "stringAnalysis.h"
+#include "variableLine.h"
 
 // Do something with an variableLine
 
