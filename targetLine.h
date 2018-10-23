@@ -4,12 +4,13 @@
 #include <stdbool.h>
 #include "actionLine.h"
 
-void targetLine(char* line);
+void targetLine(char *line);
 
 #define MAX_LINES 50
 
 // Do something with a targetLine
 
+<<<<<<< HEAD
 void targetLine(char* line) {
     // Whole file in a series of lines
     struct Document {
@@ -24,28 +25,37 @@ void targetLine(char* line) {
 
     targetLine1[0].target;
 
+=======
+void targetLine(char *line)
+{
+>>>>>>> bf679460b61b594455f02b3f08248ecc5d5b1a1c
     char *target = firstWord(line, ':');
     char *dependencies = endingOfLine(line, ':');
-    if (strcmp(dependencies, "") != 0) {
-        char* dependencyList[20]; // Used to store all the dependencies 
+    if (strcmp(dependencies, "") != 0)
+    {
+        char *dependencyList[20]; // Used to store all the dependencies
         int numDependencies = 0;
-        char* dependency;
+        char *dependency;
         char buf[50]; // Used for the max number of characters of a dependency
 
-        strcpy(buf,dependencies);
+        strcpy(buf, dependencies);
         dependency = buf;
-        for (int i = 0; buf[i] != '\0'; i++) {
-            if (buf[i] == ' ') {
+        for (int i = 0; buf[i] != '\0'; i++)
+        {
+            if (buf[i] == ' ')
+            {
                 buf[i] = '\0';
                 dependencyList[numDependencies] = dependency;
                 numDependencies++;
-                dependency = buf+i+1;
+                dependency = buf + i + 1;
             }
         }
-        if (dependency != NULL) {
+        if (dependency != NULL)
+        {
             dependencyList[numDependencies] = dependency;
         }
-        for (int i=0; i < numDependencies+1; i++) {
+        for (int i = 0; i < numDependencies + 1; i++)
+        {
             // Check date last modified
             printf("%s\n", dependencyList[i]);
         }
