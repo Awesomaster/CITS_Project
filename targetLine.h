@@ -10,25 +10,8 @@ void targetLine(char *line);
 
 // Do something with a targetLine
 
-<<<<<<< HEAD
-void targetLine(char* line) {
-    // Whole file in a series of lines
-    struct Document {
-        char *line;
-    } file[MAX_LINES];
-    // We itterate through this doocument backwards, 
-
-    struct {
-        char *target;
-        char *dependencies[20];
-    } targetLine1[20];
-
-    targetLine1[0].target;
-
-=======
 void targetLine(char *line)
 {
->>>>>>> bf679460b61b594455f02b3f08248ecc5d5b1a1c
     char *target = firstWord(line, ':');
     char *dependencies = endingOfLine(line, ':');
     if (strcmp(dependencies, "") != 0)
