@@ -154,11 +154,11 @@ int main(int argc, char **argv)
 
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
-      wholeFile[currentLine].name = firstWord(line, '=');
-      wholeFile[currentLine].key = endingOfLine(line, '=');
-      printf("/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
-      printf("/---/ Name: %s, Value: %s\n", wholeFile[currentLine].name, wholeFile[currentLine].key);
+      addVariable(variables, firstWord(line, '='), endingOfLine(line, '=')); // This places it on top of the stack
+      fprintf(stdout, "/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
+      fprintf(stdout, "/---/ Name: %s, Value: %s\n", wholeFile[currentLine].name, wholeFile[currentLine].key);
       lastline = 0;
+      
     }
     else
     {
