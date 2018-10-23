@@ -6,9 +6,24 @@
 
 void targetLine(char* line);
 
+#define MAX_LINES 50
+
 // Do something with a targetLine
 
 void targetLine(char* line) {
+    // Whole file in a series of lines
+    struct Document {
+        char *line;
+    } file[MAX_LINES];
+    // We itterate through this doocument backwards, 
+
+    struct {
+        char *target;
+        char *dependencies[20];
+    } targetLine1[20];
+
+    targetLine1[0].target;
+
     char *target = firstWord(line, ':');
     char *dependencies = endingOfLine(line, ':');
     if (strcmp(dependencies, "") != 0) {
