@@ -63,17 +63,18 @@ int main(int argc, char **argv)
   //"C:\\Users\\Josh\\Desktop\\inputfile.txt";
 
   inputfile = fopen(filename, "r");
-  // Check file is valid (and openning was successful)
+  // Check file is valid (and opening was successful)
   if (inputfile == NULL)
   {
-    printf("Could not open file %s", filename);
+    printf("Could not open file '%s'", filename);
     return 1;
   }
 
   // --- START OF READING LINES ---
   // Read the file, line by line
   int lastline = 0; // Useful for actionLine
-  VARIABLE *variables = malloc(sizeof(VARIABLE));
+  int nth = 0; // Variable number
+  VARIABLE *variables = NULL;
   TARGETLINE *wholeFile = malloc(sizeof(TARGETLINE));
   ACTIONLINE *actions = malloc(sizeof(ACTIONLINE));
   int currentLine = 0; // Integer used to store the current possition in wholeFile
@@ -97,7 +98,7 @@ int main(int argc, char **argv)
       if (lastline >= 1)
       {
         pushAction(line, actions);
-        addActionLine(wholeFile, actions); // 
+        addActionLine(wholeFile, actions); //
         // printf("\n/---/ This starts with a tab and thus is, is opperated over if it follows either an actionline or targetname\n");
         lastline += 1; // If a line after is also a target it will be linked
       }
@@ -107,7 +108,7 @@ int main(int argc, char **argv)
       // Need new line since starting a targetLine
       currentLine += 1;
 
-      // -- Seperating into multiple dependencies -- 
+      // -- Seperating into multiple dependencies --
       char *dependencies = endingOfLine(line, ':');
       char *dependencyList[20]; // Used to store all the dependencies
       if (strcmp(dependencies, "") != 0)
@@ -150,15 +151,13 @@ int main(int argc, char **argv)
     {
       // Need new line since starting a variableDefinition
       currentLine += 1;
-      realloc(variables, (currentLine + 1) * sizeof(VARIABLE));
-
       // Type Variable Definition
       // Get the first bit, and every time $(first bit) is written, replace with second bit
-      addVariable(variables, firstWord(line, '='), endingOfLine(line, '=')); // This places it on top of the stack
+      addVariable(variables, firstWord(line, '='), endingOfLine(line, '='), nth); // This places it on top of the stack
       fprintf(stdout, "/---/ Above line is a variable assignment, here we must assign the variables name (when in parenthesis starting with a $)\n");
-      fprintf(stdout, "/---/ Name: %s, Value: %s\n", wholeFile[currentLine].name, wholeFile[currentLine].key);
+      fprintf(stdout, "/---/ Name: %s, Value: %s\n", variables[nth].name, variables[nth].key);
       lastline = 0;
-      
+      nth+=1;
     }
     else
     {
@@ -166,9 +165,9 @@ int main(int argc, char **argv)
       lastline = 0;
     }
   }
-  for (int i = 0; i < currentLine; i++)
+  for (int i = 0; i < nth; i++)
   {
-    printf("%i, %s, %s\n", i, wholeFile[i].name, wholeFile[i].key);
+    printf("%i, %s, %s\n", i, variables[i].name, variables[i].key);
   }
 
   fclose(inputfile);

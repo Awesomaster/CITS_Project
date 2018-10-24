@@ -6,6 +6,5 @@
 
 // Do something with an variableLine
 
-void addVariable(VARIABLE *variables, char *name, char *key);
-char **removeVariable(VARIABLE *variables);
+void addVariable(VARIABLE *variables, char *name, char *key, int nth);
 void replaceVariables(char *line, VARIABLE *variables);

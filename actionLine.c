@@ -16,7 +16,7 @@ void pushAction(char *action, ACTIONLINE *wholeActionline)
         exit(EXIT_FAILURE);
     }
 
-    actionline->actionLine = action;
+    actionline->actionLine = action; //equivalent to (*actionline).actionLine = action
     actionline->next = wholeActionline;
     wholeActionline = actionline;
 }
